@@ -7,6 +7,9 @@ export const theme = extendTheme({
       '500': '#5B5551',
       '50': '#E5E5E5',
     },
+    red: {
+      '500': '#E50914',
+    },
   },
   fonts: {
     heading: 'Roboto',
