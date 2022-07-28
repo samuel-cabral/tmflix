@@ -1,103 +1,63 @@
-import {
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Link,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Button, Checkbox, Flex, Link, Stack, Text } from '@chakra-ui/react';
+import Head from 'next/head';
+import { Input } from '../components/Form/Input';
 
-export default function Home() {
+export default function SignIn() {
   return (
-    <Flex
-      w="100vw"
-      h="100vh"
-      align="center"
-      justify="center"
-      bgImage="linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/signin_bg.jpg')"
-      bgPosition="center"
-      bgRepeat="no-repeat"
-    >
+    <>
+      <Head>
+        <title>Mtflix</title>
+      </Head>
       <Flex
-        as="form"
-        width="100%"
-        maxWidth={460}
-        bg="rgba(0,0,0, 0.7);"
-        p="16"
-        borderRadius={8}
-        flexDir="column"
+        w="100vw"
+        h="100vh"
+        align="center"
+        justify="center"
+        bgImage="linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/signin_bg.jpg')"
+        bgPosition="center"
+        bgRepeat="no-repeat"
       >
-        <Text fontSize="4xl" mb="8" fontWeight="bold">
-          Sign In
-        </Text>
-        <Stack spacing="4">
-          <FormControl>
-            <FormLabel htmlFor="email" color="gray.400">
-              Email or phone number
-            </FormLabel>
-            <Input
-              name="email"
-              type="email"
-              focusBorderColor="gray.800"
-              bgColor="gray.800"
-              size="lg"
-              variant="filled"
-              _hover={{
-                bgColor: 'gray.800',
-              }}
-              _focus={{
-                bgColor: 'gray.800',
-              }}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel htmlFor="password" color="gray.400">
-              Password
-            </FormLabel>
-            <Input
-              name="password"
-              type="password"
-              focusBorderColor="gray.800"
-              bgColor="gray.800"
-              size="lg"
-              variant="filled"
-              _hover={{
-                bgColor: 'gray.800',
-              }}
-              _focus={{
-                bgColor: 'gray.800',
-              }}
-            />
-          </FormControl>
-        </Stack>
-
-        <Button
-          type="submit"
-          mt="20"
-          colorScheme="red"
-          bg="red.500"
-          size="lg"
-          opacity="1"
-        >
-          Sign In
-        </Button>
         <Flex
-          align="center"
-          justify="space-between"
-          mt="2"
-          fontWeight="light"
-          color="gray.500"
+          as="form"
+          width="100%"
+          maxWidth={460}
+          bg="rgba(0,0,0, 0.7);"
+          p="16"
+          borderRadius={8}
+          flexDir="column"
         >
-          <Checkbox colorScheme="gray" iconColor="black" defaultChecked>
-            Remember me
-          </Checkbox>
-          <Link href="/LoginHelp">Need help?</Link>
+          <Text fontSize="4xl" mb="8" fontWeight="bold">
+            Sign In
+          </Text>
+          <Stack spacing="4">
+            <Input name="email" type="email" label="Email" />
+            <Input name="password" type="password" label="Senha" />
+          </Stack>
+
+          <Button
+            type="submit"
+            mt="20"
+            colorScheme="red"
+            bg="red.500"
+            size="lg"
+            opacity="1"
+          >
+            Entrar
+          </Button>
+          <Flex
+            align="center"
+            justify="space-between"
+            mt="2"
+            fontWeight="light"
+            color="gray.500"
+          >
+            <Checkbox colorScheme="gray" iconColor="black" defaultChecked>
+              Lembre-se de mim
+            </Checkbox>
+            <Link href="/LoginHelp">Precisa de ajuda?</Link>
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 }
