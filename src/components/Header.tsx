@@ -1,13 +1,15 @@
+import { useState, useEffect } from 'react';
+
 import {
   Avatar,
   Button,
   Flex,
+  FlexProps,
   HStack,
   Icon,
   Link,
   Menu,
   MenuButton,
-  Spacer,
   Text,
 } from '@chakra-ui/react';
 import { RiNotificationLine, RiSearchLine } from 'react-icons/ri';
@@ -15,15 +17,35 @@ import { FaChevronDown } from 'react-icons/fa';
 import { Logo } from './Logo';
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Flex
       as="header"
+      position="fixed"
+      top={0}
       w="100%"
-      maxWidth={1820}
       h="16"
       mx="auto"
       px="6"
       align="center"
+      bg={isScrolled ? 'gray.900' : 'transparent'}
     >
       <Logo />
       <Flex align="center" gap="4" ml="14">
