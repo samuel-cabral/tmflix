@@ -1,8 +1,38 @@
 import { Button, Checkbox, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import Head from 'next/head';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from '../components/Form/Input';
+import { useAuth } from '../hooks/useAuth';
+
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
+const signInFormSchema = yup.object({
+  email: yup
+    .string()
+    .required('Informe um email válido.')
+    .email('Informe um email como: johndoe@example.com'),
+  password: yup.string().required('A senha deve ter entre 4 e 60 caracteres.'),
+});
 
 export default function SignIn() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema),
+  });
+  const { errors } = formState;
+  const { signIn } = useAuth();
+
+  const handleSignIn: SubmitHandler<FieldValues> = async values => {
+    await new Promise(resolve => {
+      setTimeout(resolve, 2000);
+    });
+
+    signIn(values as SignInFormData);
+  };
   return (
     <>
       <Head>
@@ -25,13 +55,24 @@ export default function SignIn() {
           p="16"
           borderRadius={8}
           flexDir="column"
+          onSubmit={handleSubmit(handleSignIn)}
         >
           <Text fontSize="4xl" mb="8" fontWeight="bold">
             Sign In
           </Text>
           <Stack spacing="4">
-            <Input name="email" type="email" label="Email" />
-            <Input name="password" type="password" label="Senha" />
+            <Input
+              type="email"
+              label="Email"
+              error={errors.email}
+              {...register('email')}
+            />
+            <Input
+              type="password"
+              label="Senha"
+              error={errors.password}
+              {...register('password')}
+            />
           </Stack>
 
           <Button
@@ -40,7 +81,7 @@ export default function SignIn() {
             colorScheme="red"
             bg="red.500"
             size="lg"
-            opacity="1"
+            isLoading={formState.isSubmitting}
           >
             Entrar
           </Button>
