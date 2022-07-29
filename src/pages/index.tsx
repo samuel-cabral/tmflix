@@ -3,8 +3,11 @@ import Head from 'next/head';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import { Input } from '../components/Form/Input';
 import { useAuth } from '../hooks/useAuth';
+import { withSSRGuest } from '../utils/withSSRGuest';
 
 interface SignInFormData {
   email: string;
@@ -27,11 +30,7 @@ export default function SignIn() {
   const { signIn } = useAuth();
 
   const handleSignIn: SubmitHandler<FieldValues> = async values => {
-    await new Promise(resolve => {
-      setTimeout(resolve, 2000);
-    });
-
-    signIn(values as SignInFormData);
+    await signIn(values as SignInFormData);
   };
   return (
     <>
@@ -102,3 +101,9 @@ export default function SignIn() {
     </>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async context => {
+  return {
+    props: {},
+  };
+});
